@@ -1,0 +1,14 @@
+$molecule
+  READ ./zmat.inp
+$end
+
+$rem
+mem_total               230000
+mem_static              2048
+job_type                optimization
+basis                   6-31g**
+method                  b3lyp 
+symmetry                false
+sym_ignore              true
+geom_opt_max_cycles     500
+$end

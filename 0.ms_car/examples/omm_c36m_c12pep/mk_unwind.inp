@@ -1,0 +1,73 @@
+* Prepare the alpha-helix c12 peptide.
+* Zilin Song, 2022 Sep 01
+* 
+
+prnlev 4 node 0
+bomlev 0
+ioformat extended
+
+! ff io
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+! psf cor io
+read  psf card name ./c12pep.psf
+read coor card name ./c12pep_helix.cor
+
+! loop for stretching peptide chain (phi/psi goes to 180.)
+set ires 32
+label res_loop
+
+  calc pvires = @{ires} - 1
+  calc nxires = @{ires} + 1
+  
+  ! generate, setup, and edit ic table, then init coor and build ic. 
+  ic generate
+  ic fill preserve
+  
+  if @ires .ne. 32 then       ! no phi stretching on first residue
+    ic edit
+      dihe A @pvires  C -     ! edit phi
+           A @ires    N -
+           A @ires   CA -
+           A @ires    C -
+           180.
+    end
+  endif
+
+  if @ires .ne. 43 then       ! no psi stretching on last residue
+    ic edit
+      dihe A @ires    N -     ! edit psi
+           A @ires   CA -
+           A @ires    C -
+           A @nxires  N -
+           180.
+    end
+  endif
+
+  coor init sele .not. resid @ires end
+  ic build
+
+incr ires by 1
+if @ires .lt. 43 goto res_loop
+
+write coor card name c12pep_unwind_init.cor 
+stop
+! remove bad contacts. 
+cons fix sele .not. (type O .or. type HN) show end
+mini   sd nstep 100 cutnb 999.
+mini abnr nstep 2000 cutnb 999. tolenr .001 nprint 100
+
+cons fix sele type C .or. type N .or. type CA .or. type C show end
+mini   sd nstep  100 cutnb 999.
+mini abnr nstep 2000 cutnb 999. tolenr .001 nprint 100
+
+cons fix sele none end
+mini abnr nstep 2000 cutnb 999. tolenr .001 nprint 100
+
+! move to center. 
+coor orient
+
+write coor card name c12pep_unwind.cor
+
+stop

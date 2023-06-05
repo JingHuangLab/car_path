@@ -1,0 +1,33 @@
+* Make alanine dipeptide rotational psf and cors
+* Zilin Song, Jun 10 2022
+*
+
+! { read ffs } 
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+! psf
+read sequence card
+* di-alanine peptide in vacuum
+*
+1
+ALAD
+
+generate A setup warn
+
+! edit ic
+ic edit
+dihe  A 1 CLP   A 1 NL   A 1 CA    A 1 CRP   270. ! phi
+dihe  A 1 NL    A 1 CA   A 1 CRP   A 1 NR     90. ! psi
+end
+
+! generate coordinates
+ic para
+ic seed 1 CLP 1 NL 1 CA
+ic build
+
+! output
+write  psf card name ./diala.psf
+write coor card name ./diala.cor
+
+stop

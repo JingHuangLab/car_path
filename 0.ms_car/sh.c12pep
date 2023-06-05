@@ -1,0 +1,8 @@
+#!/bin/bash
+#SBATCH -J greedy_snake_init_path
+#SBATCH -p cpu 
+#SBATCH -n 1
+#SBATCH --mem=5GB
+
+# python ./ms0_car/fig_omm/c12pep_c36m/greedy_snake.py
+python ./ms0_car/fig_omm/c12pep_c36m/greedy_snake_refine.py

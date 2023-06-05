@@ -1,0 +1,75 @@
+* Initial guess by relative RMSD restraints b/w helix and unwind states.
+* Zilin Song, 2022 Sep 01
+* 
+
+prnlev 4 node 0 
+bomlev 0
+ioformat extended
+
+! ff io
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+! psf cor io
+read  psf card name c12pep.psf
+read coor card name c12pep_helix.cor       ! ref 1
+read coor card name c12pep_unwind.cor comp ! ref 2
+
+set nrep 100
+set irep 0
+set iout 1
+set outrep 0
+set interval 1
+
+! compute rms between the two state
+coor orient rms sele all end
+set rms = ?rms
+calc rmsinit =  -@{rms} ! at ref 1.
+calc rmsfinl =   @{rms} ! at ref 2.
+calc rmsstep = 2*@{rms} / (@{nrep} - 1)
+
+label rep_loop
+
+ read coor card name c12pep_helix.cor       ! ref 1
+ read coor card name c12pep_unwind.cor comp ! ref 2
+
+ calc rmsval = @{rmsinit} + @{rmsstep} * @{irep}
+ cons rmsd mass relative offset @rmsval force 100 sele .not. type H* end
+ 
+ if @irep .ne. 0 read coor pdb offset -31 name ./init_guess/tmp.pdb
+ 
+ 
+ shake bond param sele all end mxiter 10000
+
+ scalar fbeta set 2. sele all end
+
+ dyna leap lang start -                               ! use leapfrog verlet integrator
+  timestep 0.001 nstep 5000 nprint 1000 -             ! run 30ps steps at 1 fs timesteps
+  firstt 100. finalt 100. tstruct 100. tbath 100.0 -  ! 110 to 310 K heating, 310 Tbath
+  ihtfrq 1000 teminc 10 ieqfrq 100 -                  ! 10 K per 1000 steps heating, equilibrate per 100 steps 
+  iasors 1 iasvel 1 iscvel 0 ichecw 0 -               ! assign velocities via a Gaussian distribution every IHTFRQ steps, do not check temperatures (always scale)
+  cutnb 999. ntrfrq 500 -                             ! stop rotation and translation every 500 steps, PME mandatory.
+  echeck 999.                                          ! if kinetic energy changes more than 100 kcal/mol bail out
+
+
+ ！ Minimizations gives bad initial guesses. 
+ ! mini abnr nstep 5000 cutnb 999. tolenr .001
+ 
+ ! best-fit onto previous replica. 
+ calc pvirep = @{irep} - 1
+ 
+ if @{iout} .eq. @{interval} then
+  coor orient rms comp sele (type C .or. type O .or. type CA .or. type N .or. type CB) .and. resid 32 end
+  write coor  pdb name init_guess/r@{outrep}.pdb
+  incr outrep by 1
+  set iout 0
+ endif
+ 
+ cons rmsd clear
+ write coor  pdb name ./init_guess/tmp.pdb
+
+incr iout by 1
+incr irep by 1
+if @{irep} .lt. @{nrep} goto rep_loop
+
+stop

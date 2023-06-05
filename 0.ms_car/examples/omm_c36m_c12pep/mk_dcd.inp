@@ -1,0 +1,33 @@
+* Gather PDBs and make a DCD file. 
+* Zilin Song, 2022 Sep 02
+* 
+
+prnlev 4 node 0
+bomlev 0
+ioformat extended
+
+! ff io
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+! psf cor io
+read  psf card name ./c12pep.psf
+read coor card name ./c12pep_helix.cor
+read coor card name ./c12pep_helix.cor comp
+
+! traj dcd outpu
+set nrep 100
+set irep 0
+
+open write unit 22 file name ./init_guess/c12pep.dcd
+traj iwrite 22 nwrite 1 nfile @nrep skip 1
+
+label dcd_loop
+ read coor  pdb offset -31 name ./init_guess/r@{irep}.pdb
+ coor orient rms comp sele (type C .or. type O .or. type CA .or. type N) .and. resid 32 show end
+ traj write
+
+incr irep by 1
+if @{irep} .lt. @{nrep} goto dcd_loop
+
+stop

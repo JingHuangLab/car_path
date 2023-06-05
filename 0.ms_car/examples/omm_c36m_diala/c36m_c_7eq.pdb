@@ -1,0 +1,47 @@
+REMARK   1 CREATED WITH OPENMM 7.6, 2022-08-31 Generated from PES scan.
+HETATM    1  CL  ALADA   1      -0.989  -1.183   0.010  1.00  0.00           C  
+HETATM    2  HL1 ALADA   1      -1.880  -0.541   0.177  1.00  0.00           H  
+HETATM    3  HL2 ALADA   1      -1.122  -2.131   0.574  1.00  0.00           H  
+HETATM    4  HL3 ALADA   1      -0.902  -1.418  -1.072  1.00  0.00           H  
+HETATM    5  CLP ALADA   1       0.229  -0.493   0.490  1.00  0.00           C  
+HETATM    6  OL  ALADA   1       0.796  -0.845   1.517  1.00  0.00           O  
+HETATM    7  NL  ALADA   1       0.671   0.533  -0.248  1.00  0.00           N  
+HETATM    8  HL  ALADA   1       0.189   0.808  -1.071  1.00  0.00           H  
+HETATM    9  CA  ALADA   1       1.839   1.311   0.108  1.00  0.00           C  
+HETATM   10  HA  ALADA   1       2.590   0.645   0.514  1.00  0.00           H  
+HETATM   11  CB  ALADA   1       2.420   1.982  -1.154  1.00  0.00           C  
+HETATM   12  HB1 ALADA   1       1.684   2.685  -1.599  1.00  0.00           H  
+HETATM   13  HB2 ALADA   1       3.341   2.553  -0.906  1.00  0.00           H  
+HETATM   14  HB3 ALADA   1       2.678   1.213  -1.912  1.00  0.00           H  
+HETATM   15  CRP ALADA   1       1.534   2.355   1.182  1.00  0.00           C  
+HETATM   16  OR  ALADA   1       1.351   3.537   0.903  1.00  0.00           O  
+HETATM   17  NR  ALADA   1       1.483   1.918   2.455  1.00  0.00           N  
+HETATM   18  HR  ALADA   1       1.554   0.936   2.628  1.00  0.00           H  
+HETATM   19  CR  ALADA   1       1.232   2.804   3.568  1.00  0.00           C  
+HETATM   20  HR1 ALADA   1       0.244   3.306   3.455  1.00  0.00           H  
+HETATM   21  HR2 ALADA   1       2.018   3.591   3.629  1.00  0.00           H  
+HETATM   22  HR3 ALADA   1       1.228   2.236   4.524  1.00  0.00           H  
+TER      23      ALADA   1
+CONECT    1    5    2    3    4
+CONECT    2    1
+CONECT    3    1
+CONECT    4    1
+CONECT    5    1    7    6
+CONECT    6    5
+CONECT    7    5    9    8
+CONECT    8    7
+CONECT    9    7   15   10   11
+CONECT   10    9
+CONECT   11    9   12   13   14
+CONECT   12   11
+CONECT   13   11
+CONECT   14   11
+CONECT   15    9   17   16
+CONECT   16   15
+CONECT   17   15   19   18
+CONECT   18   17
+CONECT   19   17   20   21   22
+CONECT   20   19
+CONECT   21   19
+CONECT   22   19
+END

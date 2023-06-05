@@ -1,0 +1,7 @@
+{
+  "python.testing.pytestArgs": [
+    "0.ms_car"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}

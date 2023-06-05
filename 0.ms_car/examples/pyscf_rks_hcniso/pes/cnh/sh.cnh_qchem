@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -J qchem_cnh_isomer
+#SBATCH -p cpu
+#SBATCH -N 1
+#SBATCH -n 8 
+#SBATCH --mem=10GB
+
+inname='cnh.qcinp'
+
+module load apps/qchem/5.1.1
+
+# Q-Chem env. variables.
+qcscratch_dir=/home/$USER/qcscratch/$SLURM_JOB_NAME
+mkdir -p ${qcscratch_dir} 
+export QCSCRATCH=${qcscratch_dir}
+
+qclocalscr_dir=/tmp/$USER/$SLURM_JOB_NAME
+mkdir -p ${qclocalscr_dir}
+export QCLOCALSCR=${qclocalscr_dir}
+
+qchem -nt $SLURM_NTASKS $inname  $SLURM_JOB_NAME.qclog

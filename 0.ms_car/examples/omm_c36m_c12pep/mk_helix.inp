@@ -1,0 +1,39 @@
+* Prepare the alpha-helix c12 peptide.
+* Zilin Song, 2022 Sep 01
+* 
+
+prnlev 4 node 0
+bomlev 0
+ioformat extended
+
+! ff io
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+! psf
+read sequence pdb name ./pdbfix/fixed_2llm_mod20.pdb
+generate A setup warn first NTER last CTER
+
+! cor
+read coor pdb offset -31 name ./pdbfix/fixed_2llm_mod20.pdb
+
+! fix charmm gic and add missing hydrogens. 
+ic param
+ic build
+coor init sele type *H* end
+hbuild sele type *H* end
+
+! minimize the conformation. 
+mini   sd nstep  100 cutnb 999.
+mini abnr nstep 2000 cutnb 999. tolenr .001 nprint 100
+
+! move to center. 
+coor orient
+
+! output coordinates (minimized helix)
+write  psf card name c12pep.psf
+write coor card name c12pep_helix.cor
+
+! phi and psi (-64 +/- 7, -41 +/- 7), perfect helix (-57.8, -47.0)
+
+stop

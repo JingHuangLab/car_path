@@ -1,0 +1,57 @@
+* Make alanine dipeptide rotational psf and cors
+* Zilin Song, Aug 31 2022
+*
+
+! { read ffs } 
+read  rtf card name ../toppar/top_all36_prot.rtf
+read para card name ../toppar/par_all36m_prot.prm
+
+set nrep 25
+set irep 0
+
+
+label rep_loop
+
+! psf
+read sequence card
+* di-alanine peptide in vacuum
+*
+1
+ALAD
+
+generate A setup warn
+read coor  pdb name ./c36m_c_7eq.pdb 
+
+ic fill preserve
+
+! compute psi and phi for irep
+calc phi = -80 + ( 80 + 60) * @irep / ( @nrep - 1 )
+calc psi =  60 + (-60 - 80) * @irep / ( @nrep - 1 )
+
+! edit ic
+ic edit
+dihe  A 1 CLP   A 1 NL   A 1 CA    A 1 CRP   @phi ! phi
+end
+
+coor init sele type *R* show end
+
+ic edit
+dihe  A 1 NL    A 1 CA   A 1 CRP   A 1 NR    @psi ! psi
+end
+
+coor init sele type *L* show end
+
+ic build
+
+cons fix sele .not. type HL end
+mini abnr nstep 100
+cons fix sele none end
+
+! output
+write coor  pdb name ./init_guess/r@{irep}.pdb
+dele atom sele all end
+
+incr irep by 1
+if @irep .lt. @nrep goto rep_loop
+
+stop

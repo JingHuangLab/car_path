@@ -1,0 +1,27 @@
+REMARK  MAKE ALANINE DIPEPTIDE ROTATIONAL PSF AND CORS                                
+REMARK  ZILIN SONG, AUG 31 2022                                                       
+REMARK   DATE:     9/ 1/22     13:17:59      CREATED BY USER: songzl                  
+ATOM      1  CL  ALAD    1      -1.383  -0.650   0.138  1.00  0.00      A   
+ATOM      2  HL1 ALAD    1      -2.078   0.024  -0.407  1.00  0.00      A   
+ATOM      3  HL2 ALAD    1      -1.928  -1.111   0.989  1.00  0.00      A   
+ATOM      4  HL3 ALAD    1      -1.038  -1.455  -0.546  1.00  0.00      A   
+ATOM      5  CLP ALAD    1      -0.230   0.122   0.653  1.00  0.00      A   
+ATOM      6  OL  ALAD    1      -0.116   0.374   1.846  1.00  0.00      A   
+ATOM      7  NL  ALAD    1       0.671   0.533  -0.248  1.00  0.00      A   
+ATOM      8  HL  ALAD    1       0.556   0.323  -1.211  1.00  0.00      A   
+ATOM      9  CA  ALAD    1       1.839   1.311   0.108  1.00  0.00      A   
+ATOM     10  HA  ALAD    1       2.590   0.645   0.514  1.00  0.00      A   
+ATOM     11  CB  ALAD    1       2.420   1.982  -1.154  1.00  0.00      A   
+ATOM     12  HB1 ALAD    1       1.684   2.685  -1.599  1.00  0.00      A   
+ATOM     13  HB2 ALAD    1       3.341   2.553  -0.906  1.00  0.00      A   
+ATOM     14  HB3 ALAD    1       2.678   1.213  -1.912  1.00  0.00      A   
+ATOM     15  CRP ALAD    1       1.534   2.355   1.182  1.00  0.00      A   
+ATOM     16  OR  ALAD    1       2.271   3.318   1.377  1.00  0.00      A   
+ATOM     17  NR  ALAD    1       0.419   2.164   1.914  1.00  0.00      A   
+ATOM     18  HR  ALAD    1      -0.194   1.415   1.666  1.00  0.00      A   
+ATOM     19  CR  ALAD    1       0.030   3.059   2.978  1.00  0.00      A   
+ATOM     20  HR1 ALAD    1      -0.123   4.091   2.588  1.00  0.00      A   
+ATOM     21  HR2 ALAD    1       0.816   3.098   3.767  1.00  0.00      A   
+ATOM     22  HR3 ALAD    1      -0.920   2.718   3.445  1.00  0.00      A   
+TER      23      ALAD     1
+END
