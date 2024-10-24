@@ -1,4 +1,4 @@
-# car_path
+# CAR_MEP
 Source code for the JCC paper "Constant Advance Replicas Method for Locating Minimum Energy Paths and Transition States".
 
 ```0.ms_car```: Here reports the snapshot of codes that implements the Constant Advance Replicas method.  
